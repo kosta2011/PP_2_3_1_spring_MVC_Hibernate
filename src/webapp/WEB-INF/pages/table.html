@@ -1,0 +1,58 @@
+<!DOCTYPE html><meta charset=utf-8>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    -->
+    <title>Title</title>
+</head>
+<body>
+
+
+<!-- https://getbootstrap.ru/docs/v4-alpha/content/tables/ -->
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:utext="${user.id}">id</td>
+        <td th:utext="${user.name}">name</td>
+        <td th:utext="${user.lastName}">lastName</td>
+        <td>
+            <form th:method="GET" th:action="@{/{id}/edit(id=${user.getId()})}">
+                <input type="submit" value="Edit"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/{id}/delete(id=${user.getId()})}">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
+
+    </tr>
+
+    <tr>
+        <th> </th>
+
+        <form th:method="POST" th:action="@{/}" th:object="${newUser}">
+            <th><input type="text" th:field="*{name}" id="name"/></th>
+            <th><input type="text" th:field="*{lastName}" id="lastName"/></th>
+            <th> </th>
+            <th><input type="submit" value="Add user"/></th>
+        </form>
+
+    </tr>
+
+    </tbody>
+</table>
+
+
+</body>
+</html>
