@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.Properties;
+import java.util.Map;
 
 @Configuration
 @ComponentScan("com.hmc")
@@ -25,35 +25,14 @@ public class JavaConfig {
     @Autowired
     private Environment environment;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/hmc";
-    private static final String NAME = "root";
-    private static final String PASSWORD = "root";
-
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-
         em.setDataSource(getDataSource());
-        HibernateJpaVendorAdapter hibernateAdapter = new HibernateJpaVendorAdapter(); //  в качесте JPA провайдера используем хибер
+        HibernateJpaVendorAdapter hibernateAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(hibernateAdapter);
-
-        Properties prop = new Properties();
-
-        prop.put(org.hibernate.cfg.Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-        prop.put(org.hibernate.cfg.Environment.URL, URL);
-        prop.put(org.hibernate.cfg.Environment.USER, NAME);
-        prop.put(org.hibernate.cfg.Environment.PASS, PASSWORD);
-        prop.put(org.hibernate.cfg.Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
-        prop.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, "update");
-
-
-
-        em.setJpaProperties(prop);
         em.setPackagesToScan("com.hmc");
-
         return em;
-
     }
 
     @Bean
@@ -63,10 +42,8 @@ public class JavaConfig {
         dataSource.setDriverClassName(environment.getRequiredProperty("db.driver"));
         dataSource.setUsername(environment.getRequiredProperty("db.username"));
         dataSource.setPassword(environment.getRequiredProperty("db.password"));
-
         return dataSource;
     }
-
 
     @Bean
     public TransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {

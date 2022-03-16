@@ -1,9 +1,6 @@
 package com.hmc.dao;
 
 import com.hmc.model.User;
-import com.hmc.util.Util;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -28,8 +25,9 @@ public class UserDaoEntityManagerImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        entityManager.find(User.class, user.getId());
-        entityManager.merge(new User(user.getId(), user.getName(), user.getLastName()));
+//        entityManager.find(User.class, user.getId());
+//        entityManager.merge(new User(user.getId(), user.getName(), user.getLastName()));
+        entityManager.merge(user);
     }
 
     @Override
@@ -53,8 +51,7 @@ public class UserDaoEntityManagerImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> userList = entityManager.createQuery("select user from User user",
+        return entityManager.createQuery("select user from User user",
                 User.class).getResultList();
-        return userList;
     }
 }
