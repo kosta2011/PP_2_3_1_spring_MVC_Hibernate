@@ -54,4 +54,5 @@ public class UserDaoEntityManagerImpl implements UserDao {
         return entityManager.createQuery("select user from User user",
                 User.class).getResultList();
     }
+
 }

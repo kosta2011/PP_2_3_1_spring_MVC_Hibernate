@@ -27,12 +27,12 @@
         <td th:utext="${user.name}">name</td>
         <td th:utext="${user.lastName}">lastName</td>
         <td>
-            <form th:method="GET" th:action="@{/{id}/edit(id=${user.getId()})}">
+            <form th:method="GET" th:action="@{/user/{id}/edit(id=${user.getId()})}">
                 <button type="submit" class="btn btn-primary btn-lg btn-info btn-sm btn-block">Edit</button>
             </form>
         </td>
         <td>
-            <form th:method="DELETE" th:action="@{/{id}/delete(id=${user.getId()})}">
+            <form th:method="DELETE" th:action="@{/user/{id}/delete(id=${user.getId()})}">
                 <button type="submit" class="btn btn-primary btn-lg btn-danger btn-sm btn-block">Delete</button>
             </form>
         </td>
@@ -42,7 +42,7 @@
     <tr>
         <th>New</th>
 
-        <form th:method="POST" th:action="@{/}" th:object="${newUser}">
+        <form th:method="POST" th:action="@{/user/}" th:object="${newUser}">
             <th><input type="text" class="form-control form-control-sm" placeholder="First Name" th:field="*{name}" id="name"/></th>
             <th><input type="text" class="form-control form-control-sm" placeholder="Second Name" th:field="*{lastName}" id="lastName"/></th>
             <th><button type="submit" class="btn btn-primary btn-lg btn-success btn-sm btn-block">Add user</button> </th>
